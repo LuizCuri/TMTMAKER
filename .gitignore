@@ -1,0 +1,12 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# R build artifacts
+*.tar.gz
+*.zip
+*.Rcheck/
+
+# Scratch files
+teste.R
