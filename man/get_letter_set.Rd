@@ -2,18 +2,60 @@
 % Please edit documentation in R/get_letter_set.R
 \name{get_letter_set}
 \alias{get_letter_set}
-\title{Get letters from different scripts}
+\title{Get a character vector from a named writing script}
 \usage{
 get_letter_set(script = "latin", N = 26)
 }
 \arguments{
-\item{script}{Character: "latin", "greek", "arabic", or "cyrillic"}
+\item{script}{Character string naming the script. See the \strong{Supported
+scripts} section for valid values.}
 
-\item{N}{Number of letters to return}
+\item{N}{Integer. Number of characters to return. Must not exceed the
+number of characters available for the chosen script.}
 }
 \value{
-Character vector of letters
+A character vector of length \code{N}.
 }
 \description{
-Get letters from different scripts
+Returns the first \code{N} characters from the chosen writing script,
+suitable for use as \code{letter_list} in \code{\link{generate_tmt_plot}}.
+}
+\section{Supported scripts}{
+
+\describe{
+  \item{\code{"latin"}}{Standard Latin uppercase letters A-Z (26 chars).}
+  \item{\code{"latin_extended"}}{Extended Latin characters with diacritics (26 chars).}
+  \item{\code{"greek"}}{Classical Greek uppercase letters (24 chars).}
+  \item{\code{"cyrillic"}}{Russian/Cyrillic uppercase letters (33 chars).}
+  \item{\code{"hebrew"}}{Hebrew alphabet letters (22 chars).
+    \strong{Note:} Hebrew is a right-to-left (RTL) script. Individual
+    isolated characters render correctly in most environments, but
+    contextual shaping or BiDi reordering may not be applied when
+    characters are placed as independent labels in a ggplot.}
+  \item{\code{"arabic"}}{Arabic alphabet (isolated forms, 28 chars).
+    \strong{Note:} Arabic is a right-to-left (RTL) script. The characters
+    provided are isolated forms and will not undergo contextual shaping
+    (joining/ligature) when rendered as ggplot labels. Full shaping
+    requires a HarfBuzz-aware renderer not available in base R graphics.}
+  \item{\code{"armenian"}}{Armenian uppercase letters (36 chars).}
+  \item{\code{"georgian"}}{Georgian Mkhedruli letters (33 chars).}
+  \item{\code{"hiragana"}}{Japanese Hiragana syllabary (25 chars).}
+  \item{\code{"katakana"}}{Japanese Katakana syllabary (25 chars).}
+  \item{\code{"ethiopic"}}{Ethiopic (Ge'ez) syllables (25 chars).}
+  \item{\code{"devanagari"}}{Devanagari consonants used in Hindi/Sanskrit
+    (25 chars). \strong{Note:} Devanagari requires a font with Devanagari
+    support and a shaping engine for full rendering. On Windows, characters
+    may appear as boxes without a suitable system font (e.g., Mangal).}
+  \item{\code{"thai"}}{Thai consonants (24 chars). \strong{Note:} Thai
+    requires a font with Thai support. Characters may appear as boxes on
+    systems without a Thai-capable font.}
+  \item{\code{"korean"}}{Korean Hangul Jamo consonants (14 chars).}
+}
+}
+
+\examples{
+get_letter_set("latin", N = 13)
+get_letter_set("greek", N = 24)
+get_letter_set("hiragana", N = 10)
+
 }

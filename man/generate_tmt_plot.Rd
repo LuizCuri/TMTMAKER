@@ -2,7 +2,7 @@
 % Please edit documentation in R/generate_tmt_plot.R
 \name{generate_tmt_plot}
 \alias{generate_tmt_plot}
-\title{Generate a randomized TMT-A or TMT-B plot, mas já dá erro se N for grande demais}
+\title{Generate a randomized TMT-A or TMT-B plot}
 \usage{
 generate_tmt_plot(
   number_list,
@@ -15,23 +15,63 @@ generate_tmt_plot(
 )
 }
 \arguments{
-\item{number_list}{A vector of numbers}
+\item{number_list}{A character (or numeric, auto-coerced) vector of numbers
+to use as labels. Must have at least \code{N} elements.}
 
-\item{letter_list}{A vector of letters}
+\item{letter_list}{A character (or numeric, auto-coerced) vector of letters
+to use as labels (used only for TMT-B). Must have at least \code{N}
+elements. See \code{\link{get_letter_set}} for pre-built sets.}
 
-\item{min_distance}{Minimum distance between elements}
+\item{min_distance}{Minimum Euclidean distance between element centres on
+the 10 x 10 canvas. Default \code{1.0}.}
 
-\item{element_size}{Size of circles and text}
+\item{element_size}{Numeric size passed to \code{ggplot2::geom_point} and
+scaled for \code{ggplot2::geom_text}. Default \code{6}.}
 
-\item{N}{Number of elements (e.g. 13)}
+\item{N}{Number of items per sequence. For TMT-B the total number of
+circles is \code{2 * N}. Default \code{13}.}
 
-\item{type}{"A" or "B" for TMT version}
+\item{type}{\code{"A"} or \code{"B"} (case-insensitive). Default
+\code{"B"}.}
 
-\item{seed}{Optional seed for reproducibility}
+\item{seed}{Optional integer seed for reproducibility. Default \code{NULL}.}
 }
 \value{
-A ggplot2 plot
+A \code{ggplot} object.
 }
 \description{
-Generate a randomized TMT-A or TMT-B plot, mas já dá erro se N for grande demais
+Produces a ggplot2 stimulus sheet for the Trail Making Test (TMT-A or
+TMT-B) by placing numbered (and, for TMT-B, lettered) circles at random
+non-overlapping positions on a 10 x 10 virtual canvas.
+}
+\details{
+\strong{Point placement algorithm:}
+Placement uses a grid-jitter approach: the canvas is divided into a regular
+grid of cells sized \code{min_distance}, one cell per point is chosen at
+random, and a small uniform jitter (up to half a cell width) is added. This
+guarantees successful placement as long as \code{N} (or \code{2N} for
+TMT-B) does not exceed the number of grid cells. A rejection-sampling
+fallback is used if the grid step fails for any reason.
+
+\strong{Rendering limitations:}
+Scripts that require contextual shaping (Arabic, Hebrew, Devanagari, Thai)
+may not render correctly with the default system font on all platforms.
+On Windows, ensure that the required Unicode font (e.g., Arial Unicode MS,
+Noto fonts) is installed and accessible to the R graphics device.
+}
+\examples{
+p <- generate_tmt_plot(
+  number_list  = as.character(1:13),
+  letter_list  = get_letter_set("latin", 13),
+  min_distance = 1.2,
+  element_size = 6,
+  N            = 13,
+  type         = "B",
+  seed         = 42
+)
+# print(p)
+
+}
+\seealso{
+\code{\link{get_letter_set}}, \code{\link{print_tmt_copies}}
 }

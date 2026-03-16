@@ -2,20 +2,65 @@
 % Please edit documentation in R/print_tmt_copies.R
 \name{print_tmt_copies}
 \alias{print_tmt_copies}
-\title{Generate and save multiple randomized TMT plots to files}
+\title{Generate and save multiple randomized TMT plots as PNG files}
 \usage{
-print_tmt_copies(n_copies = 1, output_dir = ".", ...)
+print_tmt_copies(
+  n_copies = 1,
+  output_dir = ".",
+  width = 8,
+  height = 8,
+  dpi = 300,
+  base_seed = NULL,
+  ...
+)
 }
 \arguments{
-\item{n_copies}{Number of copies to generate.}
+\item{n_copies}{Positive integer. Number of PNG files to create. Default
+\code{1}.}
 
-\item{output_dir}{Directory path where images will be saved.}
+\item{output_dir}{Character string. Directory where images will be saved.
+Created recursively if it does not exist. Default \code{"."}.}
 
-\item{...}{Additional arguments passed to \code{generate_tmt_plot()} (except \code{seed}, which is auto-handled).}
+\item{width}{Numeric. Output image width in inches. Default \code{8}.}
+
+\item{height}{Numeric. Output image height in inches. Default \code{8}.}
+
+\item{dpi}{Numeric. Output resolution in dots per inch. Default \code{300}.}
+
+\item{base_seed}{Integer or \code{NULL}. Base seed for reproducibility.
+Copy \emph{i} receives seed \code{base_seed + i}. When \code{NULL}
+(default), seeds are drawn from \code{.Random.seed} and results differ
+between runs.}
+
+\item{...}{Additional arguments passed to \code{\link{generate_tmt_plot}}
+(the \code{seed} argument is handled internally and must not be passed
+here).}
 }
 \value{
-Saves PNG files to disk. Returns a vector of file paths.
+Invisibly returns a character vector of the saved file paths.
 }
 \description{
-Generates multiple randomized Trail Making Test (TMT) plots and saves them as PNG images.
+Generates \code{n_copies} unique randomized Trail Making Test (TMT) plots
+and saves each as a PNG file in \code{output_dir}. Each copy uses a
+different random seed derived from the copy index, so all copies differ.
+}
+\examples{
+\dontrun{
+paths <- print_tmt_copies(
+  n_copies     = 3,
+  output_dir   = tempdir(),
+  number_list  = as.character(1:13),
+  letter_list  = get_letter_set("latin", 13),
+  min_distance = 1.2,
+  element_size = 6,
+  N            = 13,
+  type         = "B",
+  base_seed    = 100
+)
+cat(paths, sep = "\n")
+}
+
+}
+\seealso{
+\code{\link{generate_tmt_plot}}, \code{\link{get_letter_set}}
 }

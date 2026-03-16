@@ -1,15 +1,21 @@
 Package: TMTMAKER
 Title: Generate Randomized Trail Making Test (TMT) Stimuli
-Version: 0.1.0
+Version: 0.2.0
 Authors@R:
     person("Luiz Guilherme", "Curi", , "luizg.curi@gmail.com", role = c("aut", "cre"))
 Description: Creates randomized Trail Making Test (TMT-A and TMT-B) stimulus
-    sheets with configurable number of elements, spacing, and alphabet scripts
-    (Latin, Greek, Arabic, Cyrillic). Useful for researchers and clinicians who
-    need multiple unique versions of the TMT for neuropsychological assessment.
+    sheets as PNG images. Supports configurable number of elements, minimum
+    spacing, and 14 writing scripts including Latin, Greek, Arabic, Cyrillic,
+    Hebrew, Armenian, Georgian, Hiragana, Katakana, Ethiopic, Devanagari,
+    Thai, and Korean. Intended for researchers and clinicians who need multiple
+    unique, reproducible versions of the TMT for neuropsychological assessment.
 License: MIT + file LICENSE
 Imports:
     ggplot2
+Suggests:
+    testthat (>= 3.0.0),
+    devtools
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Config/testthat/edition: 3
