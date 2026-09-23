@@ -11,5 +11,9 @@
 # Claude Code session files
 .claude/
 
+# Experimental data — keep local, never push (personal timing records)
+data/*.csv
+analysis/output/
+
 # Scratch files
 teste.R

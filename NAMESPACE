@@ -2,4 +2,5 @@
 
 export(generate_tmt_plot)
 export(get_letter_set)
+export(log_session)
 export(print_tmt_copies)
