@@ -67,7 +67,7 @@ validate_tmt_params <- function(number_list, letter_list,
       length(number_list), N
     ))
   }
-  if (length(letter_list) < N) {
+  if (type == "B" && length(letter_list) < N) {
     stop(sprintf(
       "Not enough letters: length(letter_list) = %d but N = %d.",
       length(letter_list), N

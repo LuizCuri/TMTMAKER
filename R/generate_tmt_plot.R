@@ -52,7 +52,7 @@
 #'
 #' @export
 generate_tmt_plot <- function(number_list,
-                              letter_list,
+                              letter_list  = character(0),
                               min_distance = 1.0,
                               element_size = 6,
                               N            = 13,
@@ -80,10 +80,10 @@ generate_tmt_plot <- function(number_list,
   if (!is.null(seed)) set.seed(seed)
 
   # --- Build label sequence ---
-  numbers     <- sample(number_list, N)
-  letter_samp <- sample(letter_list, N)
+  numbers <- sample(number_list, N)
 
   sequence_labels <- if (type == "B") {
+    letter_samp <- sample(letter_list, N)
     as.character(rbind(numbers, letter_samp))
   } else {
     as.character(numbers)

@@ -41,15 +41,28 @@ for (i in seq_len(nrow(stimulus_schedule))) {
   fpath <- file.path(out_dir, fname)
 
   result <- tryCatch({
-    p <- generate_tmt_plot(
-      number_list  = nums,
-      letter_list  = stims,
-      N            = row$N,
-      type         = row$tmt_type,
-      seed         = row$seed,
-      min_distance = 1.0,
-      element_size = 6
-    )
+    # TMT-A: Arabic stimuli ARE the sequence (number_list).
+    # TMT-B: numbers are the numeric sequence; Arabic stimuli alternate as letters.
+    if (row$tmt_type == "A") {
+      p <- generate_tmt_plot(
+        number_list  = stims,
+        N            = row$N,
+        type         = "A",
+        seed         = row$seed,
+        min_distance = 1.0,
+        element_size = 6
+      )
+    } else {
+      p <- generate_tmt_plot(
+        number_list  = nums,
+        letter_list  = stims,
+        N            = row$N,
+        type         = "B",
+        seed         = row$seed,
+        min_distance = 1.0,
+        element_size = 6
+      )
+    }
 
     ggplot2::ggsave(
       filename = fpath,
