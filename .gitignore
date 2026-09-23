@@ -8,5 +8,8 @@
 *.zip
 *.Rcheck/
 
+# Claude Code session files
+.claude/
+
 # Scratch files
 teste.R
